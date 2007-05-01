@@ -1,6 +1,7 @@
 %define	name	libsndfile
-%define version 1.0.17
-%define release %mkrel 5
+%define version 1.0.18
+%define prel pre8
+%define release %mkrel 0.%{prel}.1
 %define	major	1
 %define	libname	%mklibname sndfile %major
 
@@ -10,12 +11,11 @@ Version:	%{version}
 Release:	%{release}
 License:	LGPL
 Group:		Sound
-Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}.tar.bz2
-Patch: libsndfile-1.0.17+flac-1.1.3.patch
+Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.bz2
 URL:		http://www.mega-nerd.com/libsndfile/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires: libflac-devel libogg-devel
-BuildRequires: sqlite3-devel
+BuildRequires:	libflac-devel libogg-devel
+BuildRequires:	sqlite3-devel
 
 %description
 libsndfile is a C library for reading and writing sound files such as
@@ -64,11 +64,7 @@ This contains sndfile-info for printing information about a sound
 file and sndfile-play for playing a sound file.
 
 %prep
-%setup -q
-%patch -p1
-aclocal-1.9
-autoconf
-automake-1.9
+%setup -qn %{name}-%{version}%{prel}
 
 %build
 %configure2_5x
@@ -108,5 +104,3 @@ rm -rf %buildroot
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_datadir}/octave/
-
-
