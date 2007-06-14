@@ -5,13 +5,14 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.18
-Release:	%mkrel 0.%{prel}.2
+Release:	%mkrel 0.%{prel}.3
 License:	LGPL
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.bz2
-BuildRequires:	libogg-devel
-BuildRequires:	sqlite3-devel
+BuildRequires: libogg-devel
+BuildRequires: sqlite3-devel
+BuildRequires: libflac-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
@@ -37,6 +38,7 @@ libsndfile.
 Summary:	Libraries, includes, etc to develop libsndfile applications 
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
+Requires: libflac-devel
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n	%{libname}-devel
@@ -102,3 +104,4 @@ rm -rf %{buildroot}
 %{_bindir}/sndfile-*
 %{_mandir}/man1/*
 %{_datadir}/octave/
+
