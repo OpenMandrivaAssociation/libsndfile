@@ -5,12 +5,11 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.18
-Release:	%mkrel 0.%{prel}.1
+Release:	%mkrel 0.%{prel}.2
 License:	LGPL
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.bz2
-BuildRequires:	libflac-devel
 BuildRequires:	libogg-devel
 BuildRequires:	sqlite3-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
@@ -72,6 +71,7 @@ file and sndfile-play for playing a sound file.
 rm -rf %{buildroot} 
 
 %makeinstall_std 
+rm -rf %buildroot%{_includedir}/FLAC
 
 %clean
 rm -rf %{buildroot}
@@ -91,15 +91,6 @@ rm -rf %{buildroot}
 %{_libdir}/libsndfile.so
 %{_includedir}/sndfile.h
 %{_includedir}/sndfile.hh
-%{_includedir}/FLAC/all.h
-%{_includedir}/FLAC/assert.h
-%{_includedir}/FLAC/callback.h
-%{_includedir}/FLAC/export.h
-%{_includedir}/FLAC/format.h
-%{_includedir}/FLAC/metadata.h
-%{_includedir}/FLAC/ordinals.h
-%{_includedir}/FLAC/stream_decoder.h
-%{_includedir}/FLAC/stream_encoder.h
 %{_libdir}/pkgconfig/sndfile.pc
 
 %files -n %{libname}-static-devel
