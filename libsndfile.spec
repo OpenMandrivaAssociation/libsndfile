@@ -1,18 +1,20 @@
 %define prel pre11
-%define	major	1
+%define	major 1
 %define	libname	%mklibname sndfile %{major}
+%define develname %mklibname sndfile -d
+%define staticname %mklibname sndfile -d -s
 
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.18
-Release:	%mkrel 0.%{prel}.3
+Release:	%mkrel 0.%{prel}.4
 License:	LGPL
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.bz2
-BuildRequires: libogg-devel
-BuildRequires: sqlite3-devel
-BuildRequires: libflac-devel
+BuildRequires:	libogg-devel
+BuildRequires:	sqlite3-devel
+BuildRequires:	libflac-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
@@ -21,7 +23,7 @@ AIFF, AU and WAV files through one standard interface. It can currently
 read/write 8, 16, 24 and 32-bit PCM files as well as 32-bit floating
 point WAV files and a number of compressed formats.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Shared library of sndfile
 Group:		System/Libraries
 
@@ -34,27 +36,27 @@ point WAV files and a number of compressed formats.
 This package contains the shared library to run applications based on
 libsndfile.
 
-%package -n	%{libname}-devel 
+%package -n %{develname}
 Summary:	Libraries, includes, etc to develop libsndfile applications 
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Requires: libflac-devel
-Provides:	%{name}-devel = %{version}-%{release}
+Requires:	libflac-devel
+Obsoletes:	%{libname}-devel
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 Libraries, include files, etc you can use to develop libsndfile applications.
 
-%package -n	%{libname}-static-devel 
+%package -n %{staticname}
 Summary:	Static Library for developing libsndfile applications
 Group:		Development/C
-Requires:	%{libname}-devel = %{version}-%{release}
+Requires:	%{develname} = %{version}-%{release}
 Provides:	%{name}-static-devel = %{version}-%{release}
 
-%description -n	%{libname}-static-devel
+%description -n	%{staticname}
 This contains the static library of libsndfile needed for building apps that
 link statically to libsndfile.
 
-%package	progs
+%package progs
 Summary:	Example progs based on libsndfile
 Group:		Sound 
 
@@ -73,7 +75,7 @@ file and sndfile-play for playing a sound file.
 rm -rf %{buildroot} 
 
 %makeinstall_std 
-rm -rf %buildroot%{_includedir}/FLAC
+rm -rf %{buildroot}%{_includedir}/FLAC
 
 %clean
 rm -rf %{buildroot}
@@ -86,7 +88,7 @@ rm -rf %{buildroot}
 %doc AUTHORS ChangeLog INSTALL NEWS README TODO
 %{_libdir}/libsndfile.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %doc %{_docdir}/libsndfile1-dev
 %attr(644,root,root) %{_libdir}/libsndfile.la
@@ -95,7 +97,7 @@ rm -rf %{buildroot}
 %{_includedir}/sndfile.hh
 %{_libdir}/pkgconfig/sndfile.pc
 
-%files -n %{libname}-static-devel
+%files -n %{staticname}
 %defattr(-,root,root)
 %{_libdir}/libsndfile.a
 
@@ -104,4 +106,3 @@ rm -rf %{buildroot}
 %{_bindir}/sndfile-*
 %{_mandir}/man1/*
 %{_datadir}/octave/
-
