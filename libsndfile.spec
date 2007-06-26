@@ -7,7 +7,7 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.18
-Release:	%mkrel 0.%{prel}.5
+Release:	%mkrel 0.%{prel}.6
 License:	LGPL
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
@@ -42,6 +42,7 @@ Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Requires:	libflac-devel
 Provides:	sndfile-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname sndfile 1 -d
 
 %description -n	%{develname}
