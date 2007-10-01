@@ -12,11 +12,7 @@ License:	LGPL
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.bz2
-<<<<<<< .mine
-Patch0:		libsndfile-CVE-2007-4974.diff
-=======
 Patch: libsndfile-1.0.17-gentoo-CVE-2007-4974.patch
->>>>>>> .r94197
 BuildRequires:	libogg-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	libflac-devel
@@ -75,11 +71,7 @@ file and sndfile-play for playing a sound file.
 %prep
 
 %setup -qn %{name}-%{version}%{prel}
-<<<<<<< .mine
-%patch0 -p0
-=======
 %patch -p1
->>>>>>> .r94197
 
 %build
 %configure2_5x
