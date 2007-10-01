@@ -7,11 +7,12 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.18
-Release:	%mkrel 0.%{prel}.6
+Release:	%mkrel 0.%{prel}.7
 License:	LGPL
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.bz2
+Patch: libsndfile-1.0.17-gentoo-CVE-2007-4974.patch
 BuildRequires:	libogg-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	libflac-devel
@@ -69,6 +70,7 @@ file and sndfile-play for playing a sound file.
 
 %prep
 %setup -qn %{name}-%{version}%{prel}
+%patch -p1
 
 %build
 %configure2_5x
