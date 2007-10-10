@@ -1,18 +1,18 @@
-%define prel pre11
+%define prel pre17
 %define	major 1
 %define	libname	%mklibname sndfile %{major}
 %define develname %mklibname sndfile -d
 %define staticname %mklibname sndfile -d -s
+%define build_octave 0
 
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.18
-Release:	%mkrel 0.%{prel}.7
+Release:	%mkrel 0.%{prel}.1
 License:	LGPL
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
-Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.bz2
-Patch: libsndfile-1.0.17-gentoo-CVE-2007-4974.patch
+Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.gz
 BuildRequires:	libogg-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	libflac-devel
@@ -68,10 +68,22 @@ Group:		Sound
 This contains sndfile-info for printing information about a sound
 file and sndfile-play for playing a sound file.
 
+
+%if %build_octave
+%package octave
+Summary:	Octave modules based on libsndfile
+Group:		Sound 
+Conflicts: libsndfile-progs < 1.0.18-0.pre17.1mdv
+BuildRequires:	octave3-devel
+
+%description octave
+This contains octave modules based on libsndfile for reading, writing and 
+playing audio files.
+%endif
+
 %prep
 
 %setup -qn %{name}-%{version}%{prel}
-%patch -p1
 
 %build
 %configure2_5x
@@ -111,4 +123,10 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_bindir}/sndfile-*
 %{_mandir}/man1/*
+
+%if %build_octave
+%files octave
+%defattr(-,root,root)
 %{_datadir}/octave/
+%_libdir/octave/*/site/oct/*/*.oct
+%endif
