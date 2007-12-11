@@ -103,12 +103,12 @@ rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root)
-%doc AUTHORS ChangeLog INSTALL NEWS README TODO
+%doc AUTHORS INSTALL NEWS README TODO
 %{_libdir}/libsndfile.so.%{major}*
 
 %files -n %{develname}
 %defattr(-,root,root)
-%doc %{_docdir}/libsndfile1-dev
+%doc %{_docdir}/libsndfile1-dev ChangeLog 
 %attr(644,root,root) %{_libdir}/libsndfile.la
 %{_libdir}/libsndfile.so
 %{_includedir}/sndfile.h
