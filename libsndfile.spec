@@ -16,6 +16,7 @@ Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.gz
 BuildRequires:	libogg-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	libflac-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 libsndfile is a C library for reading and writing sound files such as
