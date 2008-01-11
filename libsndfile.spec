@@ -108,7 +108,8 @@ rm -rf %{buildroot}
 
 %files -n %{develname}
 %defattr(-,root,root)
-%doc %{_docdir}/libsndfile1-dev ChangeLog 
+%doc %{_docdir}/libsndfile1-dev
+%doc ChangeLog 
 %attr(644,root,root) %{_libdir}/libsndfile.la
 %{_libdir}/libsndfile.so
 %{_includedir}/sndfile.h
