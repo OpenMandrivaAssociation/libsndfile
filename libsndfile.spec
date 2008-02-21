@@ -1,4 +1,4 @@
-%define prel pre19
+%define prel pre20
 %define	major 1
 %define	libname	%mklibname sndfile %{major}
 %define develname %mklibname sndfile -d
@@ -9,7 +9,7 @@ Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.18
 Release:	%mkrel 1.%{prel}.1
-License:	LGPL
+License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.gz
