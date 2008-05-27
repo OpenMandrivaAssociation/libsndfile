@@ -1,4 +1,4 @@
-%define prel pre20
+%define prel pre22
 %define	major 1
 %define	libname	%mklibname sndfile %{major}
 %define develname %mklibname sndfile -d
@@ -13,9 +13,14 @@ License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.gz
+Patch0:		%{name}-1.0.18pre22-gcc43.patch
 BuildRequires:	libogg-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	libflac-devel
+BuildRequires:	nasm
+BuildRequires:	libalsa-devel
+BuildRequires:	libjack-devel
+BuildRequires:	autogen
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
@@ -82,8 +87,8 @@ playing audio files.
 %endif
 
 %prep
-
 %setup -qn %{name}-%{version}%{prel}
+%patch0 -p1
 
 %build
 %configure2_5x
@@ -103,7 +108,7 @@ rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root)
-%doc AUTHORS INSTALL NEWS README TODO
+%doc AUTHORS NEWS README TODO
 %{_libdir}/libsndfile.so.%{major}*
 
 %files -n %{develname}
