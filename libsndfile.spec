@@ -1,4 +1,4 @@
-%define prel pre22
+%define prel pre24h
 %define	major 1
 %define	libname	%mklibname sndfile %{major}
 %define develname %mklibname sndfile -d
