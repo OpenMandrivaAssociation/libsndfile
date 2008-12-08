@@ -15,11 +15,14 @@ URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.gz
 Patch0:		%{name}-1.0.18pre22-gcc43.patch
 BuildRequires:	libogg-devel
+BuildRequires:	libvorbis-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	libflac-devel
 BuildRequires:	nasm
 BuildRequires:	libalsa-devel
 BuildRequires:	libjack-devel
+BuildRequires:	libsamplerate-devel
+BuildRequires:	celt-devel
 BuildRequires:	autogen
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
