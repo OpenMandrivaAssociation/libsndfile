@@ -1,4 +1,4 @@
-%define prel pre24h
+%define prel pre25
 %define	major 1
 %define	libname	%mklibname sndfile %{major}
 %define develname %mklibname sndfile -d
@@ -13,7 +13,6 @@ License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.gz
-Patch0:		%{name}-1.0.18pre22-gcc43.patch
 BuildRequires:	libogg-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	sqlite3-devel
@@ -91,7 +90,6 @@ playing audio files.
 
 %prep
 %setup -qn %{name}-%{version}%{prel}
-%patch0 -p1
 
 %build
 %configure2_5x
