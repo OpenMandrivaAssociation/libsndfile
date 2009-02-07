@@ -1,4 +1,3 @@
-%define prel pre25
 %define	major 1
 %define	libname	%mklibname sndfile %{major}
 %define develname %mklibname sndfile -d
@@ -8,11 +7,11 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.18
-Release:	%mkrel 2.%{prel}.1
+Release:	%mkrel 1
 License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
-Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}%{prel}.tar.gz
+Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}.tar.gz
 BuildRequires:	libogg-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	sqlite3-devel
@@ -89,7 +88,7 @@ playing audio files.
 %endif
 
 %prep
-%setup -qn %{name}-%{version}%{prel}
+%setup -qn %{name}-%{version}
 
 %build
 %configure2_5x
