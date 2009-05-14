@@ -6,7 +6,7 @@
 
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
-Version:	1.0.19
+Version:	1.0.20
 Release:	%mkrel 1
 License:	LGPLv2+
 Group:		Sound
@@ -112,7 +112,7 @@ rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root)
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS NEWS README
 %{_libdir}/libsndfile.so.%{major}*
 
 %files -n %{develname}
