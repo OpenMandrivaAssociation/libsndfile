@@ -11,7 +11,7 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.20
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
@@ -22,7 +22,7 @@ BuildRequires:	sqlite3-devel
 BuildRequires:	libflac-devel
 BuildRequires:	libalsa-devel
 %if !%bootstrap
-%ifarch %{ix86}
+%ifarch %{ix86} x86_64
 BuildRequires:	nasm
 %endif
 BuildRequires:	libjack-devel
