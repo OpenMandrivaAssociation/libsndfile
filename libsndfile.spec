@@ -4,10 +4,14 @@
 %define staticname %mklibname sndfile -d -s
 %define build_octave 0
 
+%define bootstrap 0
+%{?_without_bootstrap: %global bootstrap 0}
+%{?_with_bootstrap: %global bootstrap 1}
+
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.20
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
@@ -16,10 +20,14 @@ BuildRequires:	libogg-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	libflac-devel
-BuildRequires:	nasm
 BuildRequires:	libalsa-devel
+%if !%bootstrap
+%ifarch %{ix86}
+BuildRequires:	nasm
+%endif
 BuildRequires:	libjack-devel
 BuildRequires:	libsamplerate-devel
+%endif
 BuildRequires:	celt-devel
 BuildRequires:	autogen
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
