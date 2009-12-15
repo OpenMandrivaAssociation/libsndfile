@@ -10,8 +10,8 @@
 
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
-Version:	1.0.20
-Release:	%mkrel 6
+Version:	1.0.21
+Release:	%mkrel 1
 License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
