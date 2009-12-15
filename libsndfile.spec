@@ -15,7 +15,7 @@ Release:	%mkrel 6
 License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
-Source0:	http://www.mega-nerd.com/libsndfile/%{name}-%{version}.tar.gz
+Source0:	http://www.mega-nerd.com/libsndfile/files/%{name}-%{version}.tar.gz
 BuildRequires:	libogg-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	sqlite3-devel
