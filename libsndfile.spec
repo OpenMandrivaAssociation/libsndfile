@@ -11,7 +11,7 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.24
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
@@ -107,6 +107,7 @@ rm -rf %{buildroot}
 
 %makeinstall_std 
 rm -rf %{buildroot}%{_includedir}/FLAC
+
 %multiarch_includes %buildroot%_includedir/sndfile.h
 
 %clean
@@ -130,7 +131,7 @@ rm -rf %{buildroot}
 %doc ChangeLog 
 %attr(644,root,root) %{_libdir}/libsndfile.la
 %{_libdir}/libsndfile.so
-%multiarch %_includedir/multiarch-*/sndfile.h
+%{multiarch_includedir}/sndfile.h
 %{_includedir}/sndfile.h
 %{_includedir}/sndfile.hh
 %{_libdir}/pkgconfig/sndfile.pc
