@@ -11,7 +11,7 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.25
-Release:	%mkrel 1
+Release:	2
 License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
@@ -25,12 +25,11 @@ BuildRequires:	libalsa-devel
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm
 %endif
-BuildRequires:	libjack-devel
-BuildRequires:	libsamplerate-devel
+BuildRequires:	pkgconfig(jack)
+BuildRequires:	pkgconfig(samplerate)
 %endif
 BuildRequires:	celt-devel
 BuildRequires:	autogen
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 libsndfile is a C library for reading and writing sound files such as
@@ -62,17 +61,6 @@ Obsoletes:	%mklibname sndfile 1 -d
 
 %description -n	%{develname}
 Libraries, include files, etc you can use to develop libsndfile applications.
-
-%package -n %{staticname}
-Summary:	Static Library for developing libsndfile applications
-Group:		Development/C
-Requires:	%{develname} = %{version}-%{release}
-Provides:	%{name}-static-devel = %{version}-%{release}
-Obsoletes:	%mklibname sndfile 1 -d -s
-
-%description -n	%{staticname}
-This contains the static library of libsndfile needed for building apps that
-link statically to libsndfile.
 
 %package progs
 Summary:	Example progs based on libsndfile
@@ -110,48 +98,27 @@ rm -rf %{buildroot}%{_includedir}/FLAC
 
 %multiarch_includes %buildroot%_includedir/sndfile.h
 
-%if "%{_lib}" == "lib64"
-perl -pi -e "s|-L/usr/lib\b|-L%{_libdir}|g" %{buildroot}%{_libdir}/*.la
-%endif
-
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
+rm -f %{buildroot}%{_libdir}/*.*a
 
 %files -n %{libname}
-%defattr(-,root,root)
 %doc AUTHORS NEWS README
 %{_libdir}/libsndfile.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %doc %{_docdir}/libsndfile1-dev
 %doc ChangeLog 
-%attr(644,root,root) %{_libdir}/libsndfile.la
 %{_libdir}/libsndfile.so
 %{multiarch_includedir}/sndfile.h
 %{_includedir}/sndfile.h
 %{_includedir}/sndfile.hh
 %{_libdir}/pkgconfig/sndfile.pc
 
-%files -n %{staticname}
-%defattr(-,root,root)
-%{_libdir}/libsndfile.a
-
 %files progs
-%defattr(-,root,root)
 %{_bindir}/sndfile-*
 %{_mandir}/man1/*
 
 %if %build_octave
 %files octave
-%defattr(-,root,root)
 %{_datadir}/octave/
 %_libdir/octave/*/site/oct/*/*.oct
 %endif
