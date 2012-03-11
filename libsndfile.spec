@@ -53,9 +53,7 @@ libsndfile.
 Summary:	Libraries, includes, etc to develop libsndfile applications 
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Requires:	libflac-devel
 Provides:	sndfile-devel = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname sndfile 1 -d
 
 %description -n	%{devname}
