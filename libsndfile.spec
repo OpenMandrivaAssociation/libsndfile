@@ -71,7 +71,6 @@ file and sndfile-play for playing a sound file.
 %package	octave
 Summary:	Octave modules based on libsndfile
 Group:		Sound 
-Conflicts:	libsndfile-progs < 1.0.18-0.pre17.1mdv
 BuildRequires:	octave-devel
 
 %description	octave
