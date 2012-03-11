@@ -54,7 +54,6 @@ Summary:	Libraries, includes, etc to develop libsndfile applications
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	sndfile-devel = %{version}-%{release}
-Obsoletes:	%mklibname sndfile 1 -d
 
 %description -n	%{devname}
 Libraries, include files, etc you can use to develop libsndfile applications.
