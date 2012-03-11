@@ -14,6 +14,7 @@ License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/files/%{name}-%{version}.tar.gz
+Patch0:		libsndfile-1.0.25-support-newer-octave-versions.patch
 BuildRequires:	pkgconfig(ogg)
 BuildRequires:	pkgconfig(vorbis)
 BuildRequires:	pkgconfig(sqlite3)
@@ -73,7 +74,7 @@ file and sndfile-play for playing a sound file.
 Summary:	Octave modules based on libsndfile
 Group:		Sound 
 Conflicts:	libsndfile-progs < 1.0.18-0.pre17.1mdv
-BuildRequires:	octave3-devel
+BuildRequires:	octave-devel
 
 %description	octave
 This contains octave modules based on libsndfile for reading, writing and 
@@ -82,6 +83,8 @@ playing audio files.
 
 %prep
 %setup -q
+%patch0 -p1 -b .octave~
+autoreconf -f -IM4
 
 %build
 %configure2_5x
@@ -115,5 +118,7 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %if %{with octave}
 %files octave
 %{_datadir}/octave/
-%{_libdir}/octave/*/site/oct/*/*.oct
+%dir %{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile
+%{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile/PKG_ADD
+%{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile/sndfile.oct
 %endif
