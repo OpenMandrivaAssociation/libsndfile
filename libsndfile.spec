@@ -14,11 +14,11 @@ License:	LGPLv2+
 Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/files/%{name}-%{version}.tar.gz
-BuildRequires:	libogg-devel
-BuildRequires:	libvorbis-devel
-BuildRequires:	sqlite3-devel
-BuildRequires:	libflac-devel
-BuildRequires:	libalsa-devel
+BuildRequires:	pkgconfig(ogg)
+BuildRequires:	pkgconfig(vorbis)
+BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	pkgconfig(flac)
+BuildRequires:	pkgconfig(alsa)
 %if !%{with bootstrap}
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm
@@ -26,7 +26,7 @@ BuildRequires:	nasm
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	pkgconfig(samplerate)
 %endif
-BuildRequires:	celt-devel
+BuildRequires:	pkgconfig(celt)
 BuildRequires:	autogen
 
 %description
@@ -67,7 +67,6 @@ Group:		Sound
 %description	progs
 This contains sndfile-info for printing information about a sound
 file and sndfile-play for playing a sound file.
-
 
 %if %{with octave}
 %package	octave
