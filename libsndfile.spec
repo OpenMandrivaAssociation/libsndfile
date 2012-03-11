@@ -3,7 +3,7 @@
 %define	devname	%mklibname sndfile -d
 %define	static	%mklibname sndfile -d -s
 
-%bcond_without	octave
+%bcond_with	octave
 %bcond_with	bootstrap
 
 Summary:	A library to handle various audio file formats
