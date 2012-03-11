@@ -1,12 +1,10 @@
-%define	major 1
+%define	major	1
 %define	libname	%mklibname sndfile %{major}
-%define develname %mklibname sndfile -d
-%define staticname %mklibname sndfile -d -s
-%define build_octave 0
+%define	devname	%mklibname sndfile -d
+%define	static	%mklibname sndfile -d -s
 
-%define bootstrap 0
-%{?_without_bootstrap: %global bootstrap 0}
-%{?_with_bootstrap: %global bootstrap 1}
+%bcond_without	octave
+%bcond_with	bootstrap
 
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
@@ -21,7 +19,7 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	libflac-devel
 BuildRequires:	libalsa-devel
-%if !%bootstrap
+%if !%{with bootstrap}
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm
 %endif
@@ -37,7 +35,7 @@ AIFF, AU and WAV files through one standard interface. It can currently
 read/write 8, 16, 24 and 32-bit PCM files as well as 32-bit floating
 point WAV files and a number of compressed formats.
 
-%package -n %{libname}
+%package -n	%{libname}
 Summary:	Shared library of sndfile
 Group:		System/Libraries
 
@@ -50,7 +48,7 @@ point WAV files and a number of compressed formats.
 This package contains the shared library to run applications based on
 libsndfile.
 
-%package -n %{develname}
+%package -n	%{devname}
 Summary:	Libraries, includes, etc to develop libsndfile applications 
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
@@ -59,10 +57,10 @@ Provides:	sndfile-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname sndfile 1 -d
 
-%description -n	%{develname}
+%description -n	%{devname}
 Libraries, include files, etc you can use to develop libsndfile applications.
 
-%package progs
+%package	progs
 Summary:	Example progs based on libsndfile
 Group:		Sound 
 
@@ -71,32 +69,30 @@ This contains sndfile-info for printing information about a sound
 file and sndfile-play for playing a sound file.
 
 
-%if %build_octave
-%package octave
+%if %{with octave}
+%package	octave
 Summary:	Octave modules based on libsndfile
 Group:		Sound 
-Conflicts: libsndfile-progs < 1.0.18-0.pre17.1mdv
+Conflicts:	libsndfile-progs < 1.0.18-0.pre17.1mdv
 BuildRequires:	octave3-devel
 
-%description octave
+%description	octave
 This contains octave modules based on libsndfile for reading, writing and 
 playing audio files.
 %endif
 
 %prep
-%setup -qn %{name}-%{version}
+%setup -q
 
 %build
 %configure2_5x
 %make
 
 %install
-rm -rf %{buildroot} 
-
 %makeinstall_std 
 rm -rf %{buildroot}%{_includedir}/FLAC
 
-%multiarch_includes %buildroot%_includedir/sndfile.h
+%multiarch_includes %{buildroot}%{_includedir}/sndfile.h
 
 rm -f %{buildroot}%{_libdir}/*.*a
 
@@ -104,7 +100,7 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %doc AUTHORS NEWS README
 %{_libdir}/libsndfile.so.%{major}*
 
-%files -n %{develname}
+%files -n %{devname}
 %doc %{_docdir}/libsndfile1-dev
 %doc ChangeLog 
 %{_libdir}/libsndfile.so
@@ -117,8 +113,8 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_bindir}/sndfile-*
 %{_mandir}/man1/*
 
-%if %build_octave
+%if %{with octave}
 %files octave
 %{_datadir}/octave/
-%_libdir/octave/*/site/oct/*/*.oct
+%{_libdir}/octave/*/site/oct/*/*.oct
 %endif
