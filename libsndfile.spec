@@ -1,7 +1,6 @@
 %define	major	1
 %define	libname	%mklibname sndfile %{major}
 %define	devname	%mklibname sndfile -d
-%define	static	%mklibname sndfile -d -s
 
 %bcond_with	octave
 %bcond_with	bootstrap
@@ -15,11 +14,14 @@ Group:		Sound
 URL:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/files/%{name}-%{version}.tar.gz
 Patch0:		libsndfile-1.0.25-support-newer-octave-versions.patch
-BuildRequires:	pkgconfig(ogg)
-BuildRequires:	pkgconfig(vorbis)
-BuildRequires:	pkgconfig(sqlite3)
-BuildRequires:	pkgconfig(flac)
+
+BuildRequires:	autogen
 BuildRequires:	pkgconfig(alsa)
+BuildRequires:	pkgconfig(celt)
+BuildRequires:	pkgconfig(flac)
+BuildRequires:	pkgconfig(ogg)
+BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	pkgconfig(vorbis)
 %if !%{with bootstrap}
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm
@@ -27,8 +29,6 @@ BuildRequires:	nasm
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	pkgconfig(samplerate)
 %endif
-BuildRequires:	pkgconfig(celt)
-BuildRequires:	autogen
 
 %description
 libsndfile is a C library for reading and writing sound files such as
@@ -83,7 +83,8 @@ playing audio files.
 autoreconf -f -IM4
 
 %build
-%configure2_5x
+%configure2_5x \
+	--disable-static
 %make
 
 %install
@@ -91,8 +92,6 @@ autoreconf -f -IM4
 rm -rf %{buildroot}%{_includedir}/FLAC
 
 %multiarch_includes %{buildroot}%{_includedir}/sndfile.h
-
-rm -f %{buildroot}%{_libdir}/*.*a
 
 %files -n %{libname}
 %doc AUTHORS NEWS README
@@ -118,3 +117,4 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile/PKG_ADD
 %{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile/sndfile.oct
 %endif
+
