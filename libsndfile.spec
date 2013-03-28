@@ -80,7 +80,7 @@ playing audio files.
 %prep
 %setup -q
 %patch0 -p1 -b .octave~
-autoreconf -f -IM4
+autoreconf -fi -IM4
 
 %build
 %configure2_5x \
