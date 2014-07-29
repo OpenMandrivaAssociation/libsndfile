@@ -1,6 +1,6 @@
-%define	major	1
-%define	libname	%mklibname sndfile %{major}
-%define	devname	%mklibname sndfile -d
+%define major 1
+%define libname %mklibname sndfile %{major}
+%define devname %mklibname sndfile -d
 
 %bcond_with	octave
 %bcond_with	bootstrap
@@ -83,7 +83,9 @@ playing audio files.
 autoreconf -fi -IM4
 
 %build
-%configure2_5x \
+%define _disable_ld_no_undefined 1
+
+%configure \
 	--disable-static
 %make
 
@@ -94,10 +96,10 @@ rm -rf %{buildroot}%{_includedir}/FLAC
 %multiarch_includes %{buildroot}%{_includedir}/sndfile.h
 
 %files -n %{libname}
-%doc AUTHORS NEWS README
 %{_libdir}/libsndfile.so.%{major}*
 
 %files -n %{devname}
+%doc AUTHORS NEWS README
 %doc %{_docdir}/libsndfile1-dev
 %doc ChangeLog 
 %{_libdir}/libsndfile.so
