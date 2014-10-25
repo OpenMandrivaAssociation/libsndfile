@@ -14,6 +14,7 @@ Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/files/%{name}-%{version}.tar.gz
 Patch0:		libsndfile-1.0.25-support-newer-octave-versions.patch
+Patch1:		libsndfile-1.0.25-linking.patch
 
 BuildRequires:	autogen
 BuildRequires:	pkgconfig(alsa)
@@ -79,14 +80,12 @@ playing audio files.
 
 %prep
 %setup -q
-%patch0 -p1 -b .octave~
+%apply_patches
 autoreconf -fi -IM4
 
 %build
-%define _disable_ld_no_undefined 1
 
-%configure \
-	--disable-static
+%configure
 %make
 
 %install
