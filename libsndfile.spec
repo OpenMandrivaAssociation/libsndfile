@@ -90,13 +90,20 @@ autoreconf -fi -IM4
 %makeinstall_std 
 rm -rf %{buildroot}%{_includedir}/FLAC
 
+%if %{mdvver} <= 3000000
+%multiarch_includes %{buildroot}%{_includedir}/sndfile.h
+%endif
+
 %files -n %{libname}
 %{_libdir}/libsndfile.so.%{major}*
 
 %files -n %{devname}
 %doc AUTHORS NEWS README
 %doc %{_docdir}/libsndfile
-%doc ChangeLog 
+%doc ChangeLog
+%if %{mdvver} <= 3000000
+%{multiarch_includedir}/sndfile.h
+%endif
 %{_libdir}/libsndfile.so
 %{_includedir}/sndfile.h
 %{_includedir}/sndfile.hh
