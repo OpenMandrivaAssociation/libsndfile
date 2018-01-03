@@ -8,7 +8,7 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.28
-Release:	2
+Release:	3
 License:	LGPLv2+
 Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
@@ -46,7 +46,7 @@ point WAV files and a number of compressed formats.
 Summary:	Shared library of sndfile
 Group:		System/Libraries
 # (tpg) add compat provides
-%if "%_lib" == "lib64"
+%if %_lib == lib64
 Provides:		libsndfile.so.1(libsndfile.so.1.0)(64bit)
 %else
 Provides:		libsndfile.so.1(libsndfile.so.1.0)
