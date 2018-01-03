@@ -8,13 +8,20 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.28
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/files/%{name}-%{version}.tar.gz
-
+Patch0:	libsndfile-1.0.25-system-gsm.patch
+Patch1:	libsndfile-1.0.25-zerodivfix.patch
+Patch2:	libsndfile-1.0.28-flacbufovfl.patch
+Patch3:	libsndfile-1.0.29-cve2017_6892.patch
+#libsndfile-1.0.29-cve2017_6892.patch
+# from upstream, for <= 1.0.28, rhbz#1483140
+Patch4:	libsndfile-1.0.28-cve2017_12562.patch
 BuildRequires:	autogen
+BuildRequires:	gsm-devel
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(celt)
 BuildRequires:	pkgconfig(flac)
@@ -38,6 +45,12 @@ point WAV files and a number of compressed formats.
 %package -n	%{libname}
 Summary:	Shared library of sndfile
 Group:		System/Libraries
+# (tpg) add compat provides
+%if "%_lib" == "lib64"
+Provides:		libsndfile.so.1(libsndfile.so.1.0)(64bit)
+%else
+Provides:		libsndfile.so.1(libsndfile.so.1.0)
+%endif
 
 %description -n	%{libname}
 libsndfile is a C library for reading and writing sound files such as
@@ -79,6 +92,8 @@ playing audio files.
 %prep
 %setup -q
 %apply_patches
+
+rm -r src/GSM610
 autoreconf -fi -IM4
 
 %build
@@ -120,4 +135,3 @@ rm -rf %{buildroot}%{_includedir}/FLAC
 %{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile/PKG_ADD
 %{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile/sndfile.oct
 %endif
-
