@@ -13,8 +13,15 @@ License:	LGPLv2+
 Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/files/%{name}-%{version}.tar.gz
-
+Patch0:	libsndfile-1.0.25-system-gsm.patch
+Patch1:	libsndfile-1.0.25-zerodivfix.patch
+Patch2:	libsndfile-1.0.28-flacbufovfl.patch
+Patch3:	libsndfile-1.0.29-cve2017_6892.patch
+#libsndfile-1.0.29-cve2017_6892.patch
+# from upstream, for <= 1.0.28, rhbz#1483140
+Patch4:	libsndfile-1.0.28-cve2017_12562.patch
 BuildRequires:	autogen
+BuildRequires:	gsm-devel
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(celt)
 BuildRequires:	pkgconfig(flac)
@@ -85,6 +92,8 @@ playing audio files.
 %prep
 %setup -q
 %apply_patches
+
+rm -r src/GSM610
 autoreconf -fi -IM4
 
 %build
