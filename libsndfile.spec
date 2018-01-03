@@ -8,7 +8,7 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.28
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
@@ -38,6 +38,12 @@ point WAV files and a number of compressed formats.
 %package -n	%{libname}
 Summary:	Shared library of sndfile
 Group:		System/Libraries
+# (tpg) add compat provides
+%if "%_lib" == "lib64"
+Provides:		libsndfile.so.1(libsndfile.so.1.0)(64bit)
+%else
+Provides:		libsndfile.so.1(libsndfile.so.1.0)
+%endif
 
 %description -n	%{libname}
 libsndfile is a C library for reading and writing sound files such as
@@ -120,4 +126,3 @@ rm -rf %{buildroot}%{_includedir}/FLAC
 %{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile/PKG_ADD
 %{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile/sndfile.oct
 %endif
-
