@@ -20,7 +20,6 @@ Patch3:	libsndfile-1.0.29-cve2017_6892.patch
 #libsndfile-1.0.29-cve2017_6892.patch
 # from upstream, for <= 1.0.28, rhbz#1483140
 Patch4:	libsndfile-1.0.28-cve2017_12562.patch
-BuildRequires:	autogen
 BuildRequires:	gsm-devel
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(celt)
