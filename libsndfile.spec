@@ -8,7 +8,7 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.28
-Release:	4
+Release:	5
 License:	LGPLv2+
 Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
@@ -89,24 +89,18 @@ playing audio files.
 %endif
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 rm -r src/GSM610
 autoreconf -fi -IM4
 
 %build
-
 %configure
-%make
+%make_build
 
 %install
-%makeinstall_std 
+%make_install 
 rm -rf %{buildroot}%{_includedir}/FLAC
-
-%if %{mdvver} <= 3000000
-%multiarch_includes %{buildroot}%{_includedir}/sndfile.h
-%endif
 
 %files -n %{libname}
 %{_libdir}/libsndfile.so.%{major}*
@@ -115,9 +109,6 @@ rm -rf %{buildroot}%{_includedir}/FLAC
 %doc AUTHORS NEWS README
 %doc %{_docdir}/libsndfile
 %doc ChangeLog
-%if %{mdvver} <= 3000000
-%{multiarch_includedir}/sndfile.h
-%endif
 %{_libdir}/libsndfile.so
 %{_includedir}/sndfile.h
 %{_includedir}/sndfile.hh
