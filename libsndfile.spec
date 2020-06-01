@@ -1,6 +1,13 @@
+# mpg123 uses libsndfile, wine uses mpg123
+%ifarch %{x86_64}
+%bcond_without compat32
+%endif
+
 %define major 1
 %define libname %mklibname sndfile %{major}
 %define devname %mklibname sndfile -d
+%define lib32name %mklib32name sndfile %{major}
+%define dev32name %mklib32name sndfile -d
 
 %bcond_with	octave
 %bcond_with	bootstrap
@@ -8,7 +15,7 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.28
-Release:	5
+Release:	6
 License:	LGPLv2+
 Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
@@ -33,6 +40,12 @@ BuildRequires:	nasm
 %endif
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	pkgconfig(samplerate)
+%endif
+%if %{with compat32}
+BuildRequires:	devel(libasound)
+BuildRequires:	devel(libogg)
+BuildRequires:	devel(libvorbis)
+BuildRequires:	devel(libgsm)
 %endif
 
 %description
@@ -88,18 +101,60 @@ This contains octave modules based on libsndfile for reading, writing and
 playing audio files.
 %endif
 
+%if %{with compat32}
+%package -n	%{lib32name}
+Summary:	Shared library of sndfile (32-bit)
+Group:		System/Libraries
+Provides:	libsndfile.so.1(libsndfile.so.1.0)
+
+%description -n	%{lib32name}
+libsndfile is a C library for reading and writing sound files such as
+AIFF, AU and WAV files through one standard interface. It can currently
+read/write 8, 16, 24 and 32-bit PCM files as well as 32-bit floating
+point WAV files and a number of compressed formats.
+
+This package contains the shared library to run applications based on
+libsndfile.
+
+%package -n	%{dev32name}
+Summary:	Libraries, includes, etc to develop libsndfile applications  (32-bit)
+Group:		Development/C
+Requires:	%{devname} = %{version}-%{release}
+Requires:	%{lib32name} = %{version}-%{release}
+
+%description -n	%{dev32name}
+Libraries, include files, etc you can use to develop libsndfile applications.
+%endif
+
 %prep
 %autosetup -p1
 
 rm -r src/GSM610
 autoreconf -fi -IM4
 
-%build
+export CONFIGURE_TOP="$(pwd)"
+%if %{with compat32}
+mkdir build32
+cd build32
+%configure32
+cd ..
+%endif
+
+mkdir build
+cd build
 %configure
-%make_build
+
+%build
+%if %{with compat32}
+%make_build -C build32
+%endif
+%make_build -C build
 
 %install
-%make_install 
+%if %{with compat32}
+%make_install -C build32
+%endif
+%make_install -C build
 rm -rf %{buildroot}%{_includedir}/FLAC
 
 %files -n %{libname}
@@ -124,4 +179,13 @@ rm -rf %{buildroot}%{_includedir}/FLAC
 %dir %{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile
 %{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile/PKG_ADD
 %{_libdir}/octave/*/site/oct/%{_target_platform}/sndfile/sndfile.oct
+%endif
+
+%if %{with compat32}
+%files -n %{lib32name}
+%{_prefix}/lib/libsndfile.so.%{major}*
+
+%files -n %{dev32name}
+%{_prefix}/lib/libsndfile.so
+%{_prefix}/lib/pkgconfig/sndfile.pc
 %endif
