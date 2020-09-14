@@ -15,7 +15,7 @@
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
 Version:	1.0.28
-Release:	6
+Release:	7
 License:	LGPLv2+
 Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
@@ -35,7 +35,7 @@ BuildRequires:	pkgconfig(ogg)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(vorbis)
 %if !%{with bootstrap}
-%ifarch %{ix86} x86_64
+%ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm
 %endif
 BuildRequires:	pkgconfig(jack)
