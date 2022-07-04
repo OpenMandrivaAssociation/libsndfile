@@ -14,19 +14,13 @@
 
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
-Version:	1.0.28
-Release:	7
+Version:	1.0.31
+Release:	1
 License:	LGPLv2+
 Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
 Source0:	http://www.mega-nerd.com/libsndfile/files/%{name}-%{version}.tar.gz
 Patch0:	libsndfile-1.0.25-system-gsm.patch
-Patch1:	libsndfile-1.0.25-zerodivfix.patch
-Patch2:	libsndfile-1.0.28-flacbufovfl.patch
-Patch3:	libsndfile-1.0.29-cve2017_6892.patch
-#libsndfile-1.0.29-cve2017_6892.patch
-# from upstream, for <= 1.0.28, rhbz#1483140
-Patch4:	libsndfile-1.0.28-cve2017_12562.patch
 BuildRequires:	gsm-devel
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(celt)
@@ -34,6 +28,7 @@ BuildRequires:	pkgconfig(flac)
 BuildRequires:	pkgconfig(ogg)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(vorbis)
+BuildRequires:	pkgconfig(opus)
 %if !%{with bootstrap}
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm
@@ -46,6 +41,7 @@ BuildRequires:	devel(libasound)
 BuildRequires:	devel(libogg)
 BuildRequires:	devel(libvorbis)
 BuildRequires:	devel(libgsm)
+BuildRequires:	libc6
 %endif
 
 %description
@@ -106,6 +102,7 @@ playing audio files.
 Summary:	Shared library of sndfile (32-bit)
 Group:		System/Libraries
 Provides:	libsndfile.so.1(libsndfile.so.1.0)
+Requires:	libc6
 
 %description -n	%{lib32name}
 libsndfile is a C library for reading and writing sound files such as
@@ -171,7 +168,7 @@ rm -rf %{buildroot}%{_includedir}/FLAC
 
 %files progs
 %{_bindir}/sndfile-*
-%{_mandir}/man1/*
+%doc %{_mandir}/man1/*
 
 %if %{with octave}
 %files octave
