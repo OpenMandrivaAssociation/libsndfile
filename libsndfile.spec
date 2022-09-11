@@ -14,12 +14,13 @@
 
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
-Version:	1.0.31
+Version:	1.1.0
 Release:	1
 License:	LGPLv2+
 Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
-Source0:	http://www.mega-nerd.com/libsndfile/files/%{name}-%{version}.tar.gz
+# https://github.com/erikd/libsndfile
+Source0:	https://github.com/libsndfile/libsndfile/releases/download/%{version}/libsndfile-%{version}.tar.xz
 Patch0:	libsndfile-1.0.25-system-gsm.patch
 BuildRequires:	gsm-devel
 BuildRequires:	pkgconfig(alsa)
@@ -158,7 +159,7 @@ rm -rf %{buildroot}%{_includedir}/FLAC
 %{_libdir}/libsndfile.so.%{major}*
 
 %files -n %{devname}
-%doc AUTHORS NEWS README
+%doc AUTHORS README
 %doc %{_docdir}/libsndfile
 %doc ChangeLog
 %{_libdir}/libsndfile.so
