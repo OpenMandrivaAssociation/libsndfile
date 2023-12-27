@@ -97,7 +97,7 @@ diff -uraN libsndfile-1.2.2/src/gsm610.c omv-libsndfile-1.2.2/src/gsm610.c
  
 -		gsm_init (pgsm610->gsm_data) ;
 +		gsm_destroy (pgsm610->gsm_data) ;
-++       pgsm610->gsm_data = gsm_create () ;
++       pgsm610->gsm_data = gsm_create () ;
  		if ((SF_CONTAINER (psf->sf.format)) == SF_FORMAT_WAV ||
  				(SF_CONTAINER (psf->sf.format)) == SF_FORMAT_W64)
  			gsm_option (pgsm610->gsm_data, GSM_OPT_WAV49, &true_flag) ;
