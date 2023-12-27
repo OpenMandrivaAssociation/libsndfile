@@ -4,7 +4,8 @@
 %endif
 
 %define major 1
-%define libname %mklibname sndfile %{major}
+%define libname %mklibname sndfile
+%define oldlibname %mklibname sndfile 1
 %define devname %mklibname sndfile -d
 %define lib32name %mklib32name sndfile %{major}
 %define dev32name %mklib32name sndfile -d
@@ -14,8 +15,8 @@
 
 Summary:	A library to handle various audio file formats
 Name:		libsndfile
-Version:	1.1.0
-Release:	2
+Version:	1.2.2
+Release:	1
 License:	LGPLv2+
 Group:		Sound
 Url:		http://www.mega-nerd.com/libsndfile/
@@ -55,6 +56,7 @@ point WAV files and a number of compressed formats.
 Summary:	Shared library of sndfile
 Group:		System/Libraries
 # (tpg) add compat provides
+%rename %{oldlibname}
 %if "%_lib" == "lib64"
 Provides:		libsndfile.so.1(libsndfile.so.1.0)(64bit)
 %else

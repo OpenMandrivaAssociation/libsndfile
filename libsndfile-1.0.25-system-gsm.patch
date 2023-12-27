@@ -1,7 +1,7 @@
-diff -up libsndfile-1.1.0/CMakeLists.txt.1~ libsndfile-1.1.0/CMakeLists.txt
---- libsndfile-1.1.0/CMakeLists.txt.1~	2022-03-27 14:39:27.000000000 +0200
-+++ libsndfile-1.1.0/CMakeLists.txt	2022-09-11 23:08:40.668657667 +0200
-@@ -286,7 +286,6 @@ add_library (sndfile
+diff -uraN libsndfile-1.2.2/CMakeLists.txt omv-libsndfile-1.2.2/CMakeLists.txt
+--- libsndfile-1.2.2/CMakeLists.txt	2023-08-13 11:20:17.000000000 +0200
++++ omv-libsndfile-1.2.2/CMakeLists.txt	2023-12-27 16:38:48.372447561 +0100
+@@ -271,7 +271,6 @@
  	src/double64.c
  	src/ima_adpcm.c
  	src/ms_adpcm.c
@@ -9,7 +9,7 @@ diff -up libsndfile-1.1.0/CMakeLists.txt.1~ libsndfile-1.1.0/CMakeLists.txt
  	src/dwvw.c
  	src/vox_adpcm.c
  	src/interleave.c
-@@ -347,23 +346,6 @@ add_library (sndfile
+@@ -332,23 +331,6 @@
  	src/mpeg.c
  	src/mpeg_decode.c
  	src/mpeg_l3_encode.c
@@ -33,26 +33,26 @@ diff -up libsndfile-1.1.0/CMakeLists.txt.1~ libsndfile-1.1.0/CMakeLists.txt
  	src/G72x/g72x.h
  	src/G72x/g72x_priv.h
  	src/G72x/g721.c
-@@ -412,6 +394,7 @@ target_link_libraries (sndfile
+@@ -398,6 +380,7 @@
  		$<$<BOOL:${HAVE_EXTERNAL_XIPH_LIBS}>:Opus::opus>
  		$<$<BOOL:${HAVE_MPEG}>:MPG123::libmpg123>
- 		$<$<BOOL:${HAVE_MPEG}>:Lame::Lame>
+ 		$<$<BOOL:${HAVE_MPEG}>:mp3lame::mp3lame>
 +		-lgsm
  	)
  set_target_properties (sndfile PROPERTIES
  	PUBLIC_HEADER "${sndfile_HDRS}"
-diff -up libsndfile-1.1.0/Makefile.am.1~ libsndfile-1.1.0/Makefile.am
---- libsndfile-1.1.0/Makefile.am.1~	2022-03-27 10:55:12.000000000 +0200
-+++ libsndfile-1.1.0/Makefile.am	2022-09-11 23:09:08.162826903 +0200
-@@ -47,7 +47,6 @@ SYMBOL_FILES = src/Symbols.gnu-binutils
+diff -uraN libsndfile-1.2.2/Makefile.am omv-libsndfile-1.2.2/Makefile.am
+--- libsndfile-1.2.2/Makefile.am	2023-05-20 20:22:29.000000000 +0200
++++ omv-libsndfile-1.2.2/Makefile.am	2023-12-27 16:41:08.938489973 +0100
+@@ -48,7 +48,6 @@
  
- EXTRA_DIST += include/sndfile.h.in src/config.h.in src/test_endswap.tpl src/test_endswap.def \
+ EXTRA_DIST += src/config.h.in src/test_endswap.tpl src/test_endswap.def \
  	$(SYMBOL_FILES) src/create_symbols_file.py src/binheader_writef_check.py \
 -	src/GSM610/README src/GSM610/COPYRIGHT src/GSM610/ChangeLog \
  	src/G72x/README src/G72x/README.original src/G72x/ChangeLog \
  	src/make-static-lib-hidden-privates.sh \
  	src/config.h.cmake
-@@ -72,7 +71,7 @@ src_libsndfile_la_SOURCES = src/sndfile.
+@@ -72,7 +71,7 @@
  	src/ogg.c src/ogg.h src/ogg_vorbis.c src/ogg_speex.c src/ogg_pcm.c src/ogg_opus.c src/ogg_vcomment.c src/ogg_vcomment.h \
  	src/common.h src/sfconfig.h src/sfendian.h src/wavlike.h src/sf_unistd.h src/chanmap.h src/mpeg.c
  nodist_src_libsndfile_la_SOURCES = $(nodist_include_HEADERS)
@@ -61,7 +61,7 @@ diff -up libsndfile-1.1.0/Makefile.am.1~ libsndfile-1.1.0/Makefile.am
  	src/libcommon.la $(EXTERNAL_XIPH_LIBS) -lm $(MPEG_LIBS)
  EXTRA_src_libsndfile_la_DEPENDENCIES = $(SYMBOL_FILES)
  
-@@ -91,17 +90,6 @@ src_test_main_SOURCES = src/test_main.c
+@@ -91,17 +90,6 @@
  	src/test_binheader_writef.c src/test_nms_adpcm.c
  src_test_main_LDADD = src/libcommon.la
  
@@ -79,9 +79,9 @@ diff -up libsndfile-1.1.0/Makefile.am.1~ libsndfile-1.1.0/Makefile.am
  ############
  # src/G72x #
  ############
-diff -up libsndfile-1.1.0/src/gsm610.c.1~ libsndfile-1.1.0/src/gsm610.c
---- libsndfile-1.1.0/src/gsm610.c.1~	2021-05-17 11:12:28.000000000 +0200
-+++ libsndfile-1.1.0/src/gsm610.c	2022-09-11 23:07:40.886289978 +0200
+diff -uraN libsndfile-1.2.2/src/gsm610.c omv-libsndfile-1.2.2/src/gsm610.c
+--- libsndfile-1.2.2/src/gsm610.c	2022-09-12 20:17:56.000000000 +0200
++++ omv-libsndfile-1.2.2/src/gsm610.c	2023-12-27 16:42:48.381192570 +0100
 @@ -27,7 +27,7 @@
  #include "sfendian.h"
  #include "common.h"
@@ -91,13 +91,13 @@ diff -up libsndfile-1.1.0/src/gsm610.c.1~ libsndfile-1.1.0/src/gsm610.c
  
  #define	GSM610_BLOCKSIZE		33
  #define	GSM610_SAMPLES			160
-@@ -391,7 +391,8 @@ gsm610_seek	(SF_PRIVATE *psf, int UNUSED
+@@ -391,7 +391,8 @@
  		psf_fseek (psf, psf->dataoffset, SEEK_SET) ;
  		pgsm610->blockcount = 0 ;
  
 -		gsm_init (pgsm610->gsm_data) ;
-+                gsm_destroy (pgsm610->gsm_data) ;
-+                pgsm610->gsm_data = gsm_create () ;
++		gsm_destroy (pgsm610->gsm_data) ;
++       pgsm610->gsm_data = gsm_create () ;
  		if ((SF_CONTAINER (psf->sf.format)) == SF_FORMAT_WAV ||
  				(SF_CONTAINER (psf->sf.format)) == SF_FORMAT_W64)
  			gsm_option (pgsm610->gsm_data, GSM_OPT_WAV49, &true_flag) ;
