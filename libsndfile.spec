@@ -4,7 +4,8 @@
 %endif
 
 %define major 1
-%define libname %mklibname sndfile %{major}
+%define libname %mklibname sndfile
+%define oldlibname %mklibname sndfile 1
 %define devname %mklibname sndfile -d
 %define lib32name %mklib32name sndfile %{major}
 %define dev32name %mklib32name sndfile -d
@@ -55,6 +56,7 @@ point WAV files and a number of compressed formats.
 Summary:	Shared library of sndfile
 Group:		System/Libraries
 # (tpg) add compat provides
+%rename %{oldlibname}
 %if "%_lib" == "lib64"
 Provides:		libsndfile.so.1(libsndfile.so.1.0)(64bit)
 %else
