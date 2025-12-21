@@ -23,6 +23,11 @@ Url:		https://www.mega-nerd.com/libsndfile/
 # https://github.com/erikd/libsndfile
 Source0:	https://github.com/libsndfile/libsndfile/releases/download/%{version}/libsndfile-%{version}.tar.xz
 Patch0:	libsndfile-1.0.25-system-gsm.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	gsm-devel
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(celt)
